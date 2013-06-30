@@ -1,0 +1,9 @@
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\bin\Debug\PRTSC_TO_FILE.exe.config
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\bin\Debug\PRTSC_TO_FILE.exe
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\bin\Debug\PRTSC_TO_FILE.pdb
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.Properties.Resources.resources
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.csproj.GenerateResource.Cache
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.exe
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.pdb
+C:\Users\Administrator\Dropbox\C#\PRTSC_TO_FILE\PRTSC_TO_FILE\obj\Debug\PRTSC_TO_FILE.GUI.resources
