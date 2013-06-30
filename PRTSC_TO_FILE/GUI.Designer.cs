@@ -49,7 +49,7 @@
             this.directoryText.Name = "directoryText";
             this.directoryText.Size = new System.Drawing.Size(186, 27);
             this.directoryText.TabIndex = 1;
-            this.directoryText.Text = "";
+            this.directoryText.Text = "Directory [Initial - C:\\Testing\\output]";
             this.directoryText.TextChanged += new System.EventHandler(this.directoryButton_TextChanged);
             // 
             // closeCheckBox
