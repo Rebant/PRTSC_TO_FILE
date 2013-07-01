@@ -34,7 +34,7 @@ namespace PRTSC_TO_FILE
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
 
-        private static int count = 1;
+        public static int count = 1;
         public string directory = @"C:\Testing\output\";
         public string outputFile = "";
         public ImageFormat imageFormatPicked = null;
@@ -105,14 +105,14 @@ namespace PRTSC_TO_FILE
                 }
             }
             
-            if (outputFormatCombo.Text == "Number")
-            {
-                ++count;
-            }
-
 
             printscreen.Save(outputExampleTextField.Text, imageFormatPicked);
 
+            if (outputFormatCombo.Text == "Number")
+            {
+                countTextBox.Text = (++count).ToString();
+            }
+            
             outputFormatCombo_SelectedIndexChanged(null, null);
 
         }
@@ -232,6 +232,20 @@ namespace PRTSC_TO_FILE
 
         private void imageFormatList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            outputFormatCombo_SelectedIndexChanged(null, null);
+        }
+
+        private void countTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                count = Convert.ToInt32(countTextBox.Text);
+            }
+            catch (Exception f)
+            {
+                countTextBox.Text = count.ToString();
+            }
+
             outputFormatCombo_SelectedIndexChanged(null, null);
         }
 

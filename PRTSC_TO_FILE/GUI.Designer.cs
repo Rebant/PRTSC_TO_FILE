@@ -37,6 +37,8 @@
             this.outputExampleTextField = new System.Windows.Forms.RichTextBox();
             this.outputFormatCombo = new System.Windows.Forms.ComboBox();
             this.outputExampleLabel = new System.Windows.Forms.Label();
+            this.countTextBox = new System.Windows.Forms.TextBox();
+            this.countLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // directoryButton
@@ -142,11 +144,31 @@
             this.outputExampleLabel.TabIndex = 8;
             this.outputExampleLabel.Text = "Output";
             // 
+            // countTextBox
+            // 
+            this.countTextBox.Location = new System.Drawing.Point(239, 98);
+            this.countTextBox.Name = "countTextBox";
+            this.countTextBox.Size = new System.Drawing.Size(33, 20);
+            this.countTextBox.TabIndex = 9;
+            this.countTextBox.Text = "1";
+            this.countTextBox.TextChanged += new System.EventHandler(this.countTextBox_TextChanged);
+            // 
+            // countLabel
+            // 
+            this.countLabel.AutoSize = true;
+            this.countLabel.Location = new System.Drawing.Point(159, 101);
+            this.countLabel.Name = "countLabel";
+            this.countLabel.Size = new System.Drawing.Size(74, 13);
+            this.countLabel.TabIndex = 10;
+            this.countLabel.Text = "Start count at:";
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 192);
+            this.Controls.Add(this.countLabel);
+            this.Controls.Add(this.countTextBox);
             this.Controls.Add(this.outputExampleLabel);
             this.Controls.Add(this.outputFormatCombo);
             this.Controls.Add(this.outputExampleTextField);
@@ -175,6 +197,8 @@
         private System.Windows.Forms.RichTextBox outputExampleTextField;
         private System.Windows.Forms.ComboBox outputFormatCombo;
         private System.Windows.Forms.Label outputExampleLabel;
+        private System.Windows.Forms.TextBox countTextBox;
+        private System.Windows.Forms.Label countLabel;
     }
 }
 
