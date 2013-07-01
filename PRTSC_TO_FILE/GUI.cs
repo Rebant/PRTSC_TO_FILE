@@ -219,7 +219,7 @@ namespace PRTSC_TO_FILE
                     break;
 
                 case "Date/Time":
-                    directoryToOutput += DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Year;
+                    directoryToOutput += "M" + DateTime.Now.Month + "D" + DateTime.Now.Day + "Y" + DateTime.Now.Year + "H" + DateTime.Now.Hour + "Mi" + DateTime.Now.Minute + "S" + DateTime.Now.Second;
                     break;
 
                 case "Custom":
