@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -33,8 +34,10 @@ namespace PRTSC_TO_FILE
         private NotifyIcon trayIcon;
         private ContextMenu trayMenu;
 
-        private static int count;
-        public string directory = @"C:\Testing\output";
+        private static int count = 1;
+        public string directory = @"C:\Testing\output\";
+        public string outputFile = "";
+        public ImageFormat imageFormatPicked = null;
 
         public GUI()
         {
@@ -58,6 +61,11 @@ namespace PRTSC_TO_FILE
             trayIcon.ContextMenu = trayMenu;
             trayIcon.Visible = true;
 
+            //Make .bmp format default
+            imageFormatList.SelectedIndex = 0;
+
+            //Make count output default
+            outputFormatCombo.SelectedIndex = 0;
 
         }
 
@@ -84,7 +92,28 @@ namespace PRTSC_TO_FILE
 
             graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
 
-            printscreen.Save(directory + DateTime.Now.ToString(), ImageFormat.Tiff);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (File.Exists(outputExampleTextField.Text))
+            {
+                if (!(MessageBox.Show("File Exists... Replace?", "File Exists", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                {
+                    return;
+                }
+            }
+            
+            if (outputFormatCombo.Text == "Number")
+            {
+                ++count;
+            }
+
+
+            printscreen.Save(outputExampleTextField.Text, imageFormatPicked);
+
+            outputFormatCombo_SelectedIndexChanged(null, null);
 
         }
 
@@ -99,18 +128,14 @@ namespace PRTSC_TO_FILE
             closeCheckBox.Checked = true;
             this.Close();
         }
-
-        private void directoryButton_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
+        
         private void directoryButton_Click(object sender, EventArgs e)
         {
             directory = directoryText.Text;
+            outputFormatCombo_SelectedIndexChanged(null, null);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void GUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Hide();
 
@@ -127,6 +152,87 @@ namespace PRTSC_TO_FILE
             {
                 trayIcon.Visible = false;
             }
+        }
+
+        private void outputFormatCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Format selection
+            imageFormatPicked = null;
+
+            switch (imageFormatList.SelectedItem.ToString())
+            {
+
+                case "Bmp":
+                    imageFormatPicked = ImageFormat.Bmp;
+                    break;
+
+                case "Emf":
+                    imageFormatPicked = ImageFormat.Emf;
+                    break;
+
+                case "Exif":
+                    imageFormatPicked = ImageFormat.Exif;
+                    break;
+
+                case "Gif":
+                    imageFormatPicked = ImageFormat.Gif;
+                    break;
+
+                case "Icon":
+                    imageFormatPicked = ImageFormat.Icon;
+                    break;
+
+                case "Jpeg":
+                    imageFormatPicked = ImageFormat.Jpeg;
+                    break;
+
+                case "MemoryBmp":
+                    imageFormatPicked = ImageFormat.MemoryBmp;
+                    break;
+
+                case "Png":
+                    imageFormatPicked = ImageFormat.Png;
+                    break;
+
+                case "Tiff":
+                    imageFormatPicked = ImageFormat.Tiff;
+                    break;
+
+                case "Wmf":
+                    imageFormatPicked = ImageFormat.Wmf;
+                    break;
+
+            }
+
+            //Output format selection
+            string directoryToOutput = directory + (directory.EndsWith("\\") ? "" : "\\");
+
+            if (outputFormatCombo.SelectedItem == null)
+            {
+                return;
+            }
+
+            switch (outputFormatCombo.SelectedItem.ToString())
+            {
+                case "Number":
+                    directoryToOutput += count;
+                    break;
+
+                case "Date/Time":
+                    directoryToOutput += DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Year;
+                    break;
+
+                case "Custom":
+                    directoryToOutput = outputExampleTextField.Text;
+                    break;
+            }
+
+            outputExampleTextField.Text = directoryToOutput + "." + imageFormatPicked.ToString().ToLower();
+        }
+
+        private void imageFormatList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            outputFormatCombo_SelectedIndexChanged(null, null);
         }
 
     }
