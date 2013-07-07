@@ -179,7 +179,7 @@
             this.Controls.Add(this.directoryText);
             this.Controls.Add(this.directoryButton);
             this.Name = "GUI";
-            this.Text = "Form1";
+            this.Text = "PRTSC_TO_FILE";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
