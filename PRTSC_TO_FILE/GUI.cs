@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 
 namespace PRTSC_TO_FILE
@@ -17,10 +12,13 @@ namespace PRTSC_TO_FILE
     public partial class GUI : Form
     {
         //Thanks to:
-        //http://stackoverflow.com/questions/15413172/capture-a-keyboard-keypress-in-the-background
-        //http://stackoverflow.com/questions/4605727/how-to-export-image-of-my-form-c-sharp
-        //http://alanbondo.wordpress.com/2008/06/22/creating-a-system-tray-app-with-c/
+        //http://stackoverflow.com/questions/15413172/capture-a-keyboard-keypress-in-the-background - Global keyboard shortcut
+        //http://stackoverflow.com/questions/4605727/how-to-export-image-of-my-form-c-sharp - Print screen
+        //http://alanbondo.wordpress.com/2008/06/22/creating-a-system-tray-app-with-c/ - System tray icon
+        //http://msdn.microsoft.com/en-us/library/microsoft.win32.registry.aspx - Registry keys
 
+        //Icon credit:
+        public static readonly string iconURL = "http://officinadigitale.forumcommunity.net/";
 
         // DLL libraries used to manage hotkeys
         [DllImport("user32.dll")]
@@ -39,6 +37,8 @@ namespace PRTSC_TO_FILE
         public string outputFile = "";
         public ImageFormat imageFormatPicked = null;
 
+        public static readonly string myURL = "http://www.github.com/Rebant";
+
         public GUI()
         {
             
@@ -54,8 +54,8 @@ namespace PRTSC_TO_FILE
             // standard system icon for simplicity, but you
             // can of course use your own custom icon too.
             trayIcon = new NotifyIcon();
-            trayIcon.Text = "MyTrayApp";
-            trayIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
+            trayIcon.Text = "PRTSC_TO_FILE";
+            trayIcon.Icon = Properties.Resources.MainIcon;
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenu = trayMenu;
@@ -67,6 +67,8 @@ namespace PRTSC_TO_FILE
             //Make count output default
             outputFormatCombo.SelectedIndex = 0;
 
+            startHiddenCheckBox.Checked = readRegistry();
+
         }
 
         protected override void WndProc(ref Message m)
@@ -74,14 +76,9 @@ namespace PRTSC_TO_FILE
             if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
             {
                 PrintScreen();
-                // My hotkey has been typed
-
-                // Do what you want here
-                // ...
             }
             base.WndProc(ref m);
         }
-
 
         private void PrintScreen()
         {
@@ -119,6 +116,8 @@ namespace PRTSC_TO_FILE
 
         private void OnShow(object sender, EventArgs e)
         {
+            Visible = true;
+            ShowInTaskbar = true;
             trayMenu.MenuItems.Remove(trayMenu.MenuItems[0]);
             this.Show();
         }
@@ -143,7 +142,12 @@ namespace PRTSC_TO_FILE
 
             trayMenu.MenuItems.Add("Show", OnShow);
             trayMenu.MenuItems.Add("Exit", OnExit);
-            
+
+            if (sender is String)
+            {
+                return;
+            }
+
             if (!closeCheckBox.Checked)
             {
                 e.Cancel = true;
@@ -241,12 +245,95 @@ namespace PRTSC_TO_FILE
             {
                 count = Convert.ToInt32(countTextBox.Text);
             }
-            catch (Exception f)
+            catch (Exception)
             {
                 countTextBox.Text = count.ToString();
             }
 
             outputFormatCombo_SelectedIndexChanged(null, null);
+        }
+
+        private void iconLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(iconURL);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(myURL);
+        }
+
+        private void startHiddenCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            writeRegistry(startHiddenCheckBox.Checked);
+        }
+
+        #region Registry Tools
+        /// <summary>
+        /// Reads the registry entry at "HKEY_CURRENT_USER\Software\PRTSC_TO_FILE" and returns true
+        /// if there is a key with value ("StartClosed", "true") and false otherwise.
+        /// </summary>
+        /// <returns>True if there is a registry entry at "HKEY_CURRENT_USER\Software\PRTSC_TO_FILE"
+        ///             with value ("StartClosed", "true") and false otherwise.</returns>
+        public static bool readRegistry()
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser;
+                key = key.OpenSubKey("Software").OpenSubKey("PRTSC_TO_FILE");
+
+                if (key == null)
+                {
+                    return false;
+                }
+
+                if (key.GetValue("StartClosed").ToString() == "True")
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// Writes the registry entry at "HKEY_CURRENT_USER\Software\PRTSC_TO_FILE" with the value
+        /// ("StartClosed", <option>). 
+        /// </summary>
+        /// <param name="option">A bool that decides which value to write to the registry.</param>
+        /// <returns>Returns true if successfully wrote the value to the registry.</returns>
+        public static bool writeRegistry(bool option)
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser;
+                key = key.OpenSubKey("Software", true).OpenSubKey("PRTSC_TO_FILE", true);
+
+                key.SetValue("StartClosed", option.ToString());
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        private void GUI_Load(object sender, EventArgs e)
+        {
+            if (startHiddenCheckBox.Checked)
+            {
+                Visible = false;
+                ShowInTaskbar = false;
+                GUI_FormClosing("I am a string!", null);
+            }
         }
 
     }

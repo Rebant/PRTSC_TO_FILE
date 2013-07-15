@@ -17,7 +17,13 @@ On starting the application, you will see a window with:
                   number to start at in the "Start count at" text field.
       b. Date/Time - the image will be output as 'M<month>D<day>Y<year>H<hour>Mi<minute>S<second>.<image_format>
       c. Custom - the image will be output as what is currently entered into the text field above
-
+5. On the right are some options:
+      a. Close on Exit - This closes the application when you press the "X" button if the checkbox is marked.
+      					 Otherwise, the application will simply hide itself from view. See below for details.
+      b. Start Hidden - This allows the program to start up hidden in the taskbar. The icon will still be
+      					displayed so you can always right-click the icon and press "Show".
+      c. Start count at - This is the value at which to start the count at for the "Number" format.
+      
 How to Close
 ------------
 The application will continue to run in the background even if you close the window.
@@ -31,10 +37,11 @@ Inside the bin/Debug folder
 
 TODO
 ----
-1. Image icon
-2. Tray menu does not dissapear - make it!
-3. More options on what to take a screen shot of:
+1. Tray menu does not dissapear - make it!
+2. More options on what to take a screen shot of:
       a. Current window
       b. Portion of window
       c. Full screen page (if scrolling needed)
-4. Other?
+3. Double click tray icon to show!
+4. Start with Windows option
+5. Other?
