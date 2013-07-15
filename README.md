@@ -39,6 +39,7 @@ Inside the bin/Debug folder
 
 TODO
 ----
+0. Actually make it able to start hidden!!!!
 1. Tray menu does not dissapear - make it!
 2. More options on what to take a screen shot of:
       a. Current window
