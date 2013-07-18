@@ -5,7 +5,7 @@ LOOK AT THE "RAW" - I have no idea why GitHub is not using the new lines I have 
 
 Use
 ---
-Press 'PRTSC' on your keyboard to save the screen to the directory specified!
+Press 'PRTSC' on your keyboard to save a screenshot to the directory specified!
 
 How to Use
 ----------
@@ -39,7 +39,6 @@ Inside the bin/Debug folder
 
 TODO
 ----
-0. Actually make it able to start hidden!!!!
 1. Tray menu does not dissapear - make it!
 2. More options on what to take a screen shot of:
       a. Current window
